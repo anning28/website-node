@@ -8,7 +8,7 @@ function validateAuthRequest(req, res, next) {
     return;
   }
 
-  if (typeof password !== 'string' || password.length < 8) {
+  if (typeof password !== 'string' || password.length < 6) {
     res.status(400).json({ message: 'Password must be at least 8 characters long' });
     return;
   }

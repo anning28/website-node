@@ -49,6 +49,22 @@ describe('auth API', () => {
     expect(savedUser.passwordHash).toMatch(/^\$2[aby]\$/);
   });
 
+  test('registers with form-urlencoded credentials', async () => {
+    const formCredentials = {
+      email: '531065591@qq.com',
+      password: 'password123'
+    };
+
+    const response = await request(app)
+      .post('/api/auth/register')
+      .type('form')
+      .send(formCredentials)
+      .expect(201);
+
+    expect(response.body.user).toMatchObject({ email: formCredentials.email });
+    expect(response.body.token).toEqual(expect.any(String));
+  });
+
   test('rejects duplicate email registration', async () => {
     await request(app).post('/api/auth/register').send(credentials).expect(201);
 

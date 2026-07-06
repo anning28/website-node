@@ -24,6 +24,7 @@ function signToken(user) {
 async function register(req, res, next) {
   try {
     const { email, password } = req.body;
+    console.log('Registering user with email:', email, 'and password:', password); // Debugging
     const existingUser = await User.exists({ email });
 
     if (existingUser) {
