@@ -1,6 +1,7 @@
 const express = require('express');
 
-const { deleteMe, login, register } = require('../controllers/authController');
+const { deleteMe } = require('../controllers/accountController');
+const { login, register } = require('../controllers/authController');
 const authenticate = require('../middleware/auth');
 const validateAuthRequest = require('../middleware/validateAuthRequest');
 
