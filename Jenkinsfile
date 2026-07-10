@@ -40,10 +40,10 @@ pipeline {
 
                 if pm2 describe ${APP_NAME} > /dev/null
                 then
-                    pm2 restart ${APP_NAME}
-                else
-                    pm2 start src/server.js --name ${APP_NAME}
+                    pm2 delete ${APP_NAME}
                 fi
+
+                pm2 start src/server.js --name ${APP_NAME} --cwd ${DEPLOY_DIR} --update-env
 
                 pm2 save
                 '''
