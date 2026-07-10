@@ -82,6 +82,27 @@ Content-Type: application/json
 
 成功返回 `200`，格式同注册接口。
 
+### 用户列表
+
+```http
+GET /api/users
+```
+
+成功返回 `200`：
+
+```json
+{
+  "users": [
+    {
+      "email": "user@example.com",
+      "createdAt": "2026-07-06T00:00:00.000Z",
+      "updatedAt": "2026-07-06T00:00:00.000Z",
+      "id": "..."
+    }
+  ]
+}
+```
+
 ### 删除当前账号
 
 ```http

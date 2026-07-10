@@ -125,4 +125,26 @@ describe('auth API', () => {
       .set('Authorization', 'Bearer invalid-token')
       .expect(401);
   });
+
+  test('lists users without password hashes', async () => {
+    const firstPasswordHash = await bcrypt.hash('password123', 12);
+    const secondPasswordHash = await bcrypt.hash('password456', 12);
+
+    await User.create([
+      { email: 'first@example.com', passwordHash: firstPasswordHash },
+      { email: 'second@example.com', passwordHash: secondPasswordHash }
+    ]);
+
+    const response = await request(app).get('/api/users').expect(200);
+
+    expect(response.body.users).toHaveLength(2);
+    expect(response.body.users).toEqual([
+      expect.objectContaining({ email: 'first@example.com' }),
+      expect.objectContaining({ email: 'second@example.com' })
+    ]);
+    expect(response.body.users[0].id).toEqual(expect.any(String));
+    expect(response.body.users[0]._id).toBeUndefined();
+    expect(response.body.users[0].passwordHash).toBeUndefined();
+    expect(response.body.users[1].passwordHash).toBeUndefined();
+  });
 });
